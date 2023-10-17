@@ -1,20 +1,33 @@
-
+import dotenv from "dotenv"
 import createError from "http-errors";
 import express, { Application, Request, Response, NextFunction } from "express";
-// import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
+import mongoose from "mongoose";
+import indexRouter from "./routes/index";
 
-// import indexRouter from "./src/routes/index";
+dotenv.config()
 
-const app: Application = express();
+const app: Application = express(); 
+
+console.log(
+
+);
+// MongoDB Setup
+mongoose.set("strictQuery", false);
+
+main().catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(process.env.DATABASE_URL as string);
+}
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// app.use("/", indexRouter);
+app.use("/", indexRouter);
 
 const port = process.env.PORT || 8080;
 
