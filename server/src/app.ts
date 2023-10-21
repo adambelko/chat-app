@@ -1,18 +1,16 @@
-import dotenv from "dotenv"
-import createError from "http-errors";
 import express, { Application, Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
+import createError from "http-errors";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose from "mongoose";
+import cors from "cors";
 import indexRouter from "./routes/index";
 
-dotenv.config()
+dotenv.config();
 
-const app: Application = express(); 
+const app: Application = express();
 
-console.log(
-
-);
 // MongoDB Setup
 mongoose.set("strictQuery", false);
 
@@ -22,6 +20,7 @@ async function main() {
   await mongoose.connect(process.env.DATABASE_URL as string);
 }
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,7 +35,7 @@ app.listen(port, () => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req: Request, res: Response, next: NextFunction) {
+app.use(function (req: Request, res: Response, next: NextFunction) {
   next(createError(404));
 });
 
@@ -48,7 +47,7 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json("error");
 });
 
-export default app
+export default app;
