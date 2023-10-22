@@ -8,7 +8,8 @@ import cors from "cors";
 import passport from "passport";
 import initializePassport from "./passportConfig";
 
-import indexRouter from "./routes/index";
+import indexRouter from "./routes/indexRouter";
+import userRouter from "./routes/userRouter";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(passport.initialize());
 initializePassport(passport);
 
 app.use("/", indexRouter);
+app.use("/user", userRouter);
 
 const port = process.env.PORT || 8080;
 

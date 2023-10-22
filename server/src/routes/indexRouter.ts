@@ -5,7 +5,7 @@ import { createUser_post, loginUser_post } from "../controllers/userController";
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  console.log("yet to be implemented");
 });
 
 router.post("/signup", createUser_post);
