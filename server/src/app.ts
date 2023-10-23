@@ -39,7 +39,7 @@ app.use("/user", userRouter);
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
-  console.log("hey app is listening");
+  console.log("App is listening");
 });
 
 // catch 404 and forward to error handler

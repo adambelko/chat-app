@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 import UserModel, { IUser } from "../models/user";
 
-const createUser_post = asyncHandler(async (req, res, next) => {
+export const createUser_post = asyncHandler(async (req, res, next) => {
   const hashedPassword = await bcrypt.hash(`${req.body.password}`, 10);
 
   const user = new UserModel({
@@ -17,7 +17,7 @@ const createUser_post = asyncHandler(async (req, res, next) => {
   res.json({ message: "User created successfully", user: result });
 });
 
-const loginUser_post = asyncHandler(async (req, res, next) => {
+export const loginUser_post = asyncHandler(async (req, res, next) => {
   const { username, password } = req.body;
   const user = (await UserModel.findOne({ username: username })) as IUser;
 
@@ -47,7 +47,31 @@ const loginUser_post = asyncHandler(async (req, res, next) => {
   res.json({ token, refreshToken });
 });
 
-const refreshToken_post = asyncHandler(async (req, res, next) => {
+export const userList_get = asyncHandler(async (req, res, next) => {
+  const userList = await UserModel.find({}).sort({ username: -1 }).exec();
+
+  if (!userList) {
+    res.status(404);
+    return;
+  }
+
+  res.json({ userList });
+});
+
+export const individualUser_get = asyncHandler(async (req, res, next) => {
+  const userId = req.params.id;
+
+  const user = UserModel.findOne({ _id: userId });
+
+  if (!user) {
+    res.status(404);
+    return;
+  }
+
+  res.json({ user });
+});
+
+export const refreshToken_post = asyncHandler(async (req, res, next) => {
   const { refreshToken } = req.body;
 
   const user = await UserModel.findOne({ refreshToken });
@@ -66,5 +90,3 @@ const refreshToken_post = asyncHandler(async (req, res, next) => {
   res.cookie("refresh_token", refreshToken, { httpOnly: true });
   res.json({ token });
 });
-
-export { createUser_post, loginUser_post, refreshToken_post };
