@@ -1,4 +1,3 @@
-import express, { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";

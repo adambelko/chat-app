@@ -10,6 +10,7 @@ import initializePassport from "./passportConfig";
 
 import indexRouter from "./routes/indexRouter";
 import userRouter from "./routes/userRouter";
+import chatRouter from "./routes/chatRouter";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ initializePassport(passport);
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/chat", chatRouter);
 
 const port = process.env.PORT || 8080;
 
