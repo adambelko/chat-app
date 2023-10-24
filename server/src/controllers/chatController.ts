@@ -3,10 +3,19 @@ import mongoose from "mongoose";
 import ChatModel, { IChat } from "../models/chat";
 
 export const chatList = asyncHandler(async (req, res, next) => {
-  // const chatList = ChatModel.find({}).sort({})
+  const chatList = await ChatModel.find({}).sort({ createdAt: -1 }).exec();
+
+  if (!chatList || chatList.length === 0) {
+    res.status(404).json({ message: "Chat list not found" });
+    return;
+  }
+
+  res.json(chatList);
 });
 
-export const individualChat = asyncHandler(async (req, res, next) => {});
+export const individualChat = asyncHandler(async (req, res, next) => {
+  console.log("Yet to be implemented");
+});
 
 export const newMessage = asyncHandler(async (req, res, next) => {
   const { participantIds } = req.body;
