@@ -1,8 +1,9 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface IChat extends Document {
   participants: mongoose.Types.ObjectId[];
   messages: {
+    _id: Types.ObjectId;
     sender: mongoose.Types.ObjectId;
     text: string;
     createdAt: Date;
@@ -19,6 +20,10 @@ const ChatSchema: Schema<IChat> = new Schema<IChat>({
   ],
   messages: [
     {
+      _id: {
+        type: Schema.Types.ObjectId,
+        default: new mongoose.Types.ObjectId(),
+      },
       sender: {
         type: Schema.Types.ObjectId,
         ref: "User",

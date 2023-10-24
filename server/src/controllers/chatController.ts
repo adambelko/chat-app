@@ -21,6 +21,7 @@ export const newMessage = asyncHandler(async (req, res, next) => {
   }
 
   const newMessage = {
+    _id: new mongoose.Types.ObjectId(),
     sender: participantIds[0],
     text: req.body.text,
     createdAt: new Date(),
@@ -46,4 +47,19 @@ export const newMessage = asyncHandler(async (req, res, next) => {
   res.json({ message: "Message sent successfully" });
 });
 
-export const deleteMessage = asyncHandler(async (req, res, next) => {});
+export const deleteMessage = asyncHandler(async (req, res, next) => {
+  const { messageId } = req.body;
+  const chatId = req.params.chatId;
+
+  const chat = await ChatModel.findById(chatId);
+
+  if (!chat) {
+    res.status(404).json({ message: "Chat not found" });
+    return;
+  }
+
+  chat.messages = chat.messages.filter((message) => message._id != messageId);
+  await chat.save();
+
+  res.json({ message: "Message deleted" });
+});

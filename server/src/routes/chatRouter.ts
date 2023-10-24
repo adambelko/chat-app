@@ -14,6 +14,6 @@ router.post("/", individualChat);
 
 router.post("/new-message", newMessage);
 
-router.post("/delete-message", deleteMessage);
+router.delete("/:chatId/delete-message", deleteMessage);
 
 export default router;
