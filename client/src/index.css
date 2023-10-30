@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+      font-family: "Albert Sans", "Roboto", sans-serif;
+      font-size: 16px;
+      box-sizing: border-box;
+  }
+  
+  a {
+      text-decoration: none;
+  }
+  
+  a:hover {
+      cursor: pointer;
+  }
+  
+  ul {
+      list-style: none;
+  }
+  
+  button {
+      font-family: "Albert Sans", "Roboto", sans-serif;
+      cursor: pointer;
+  }
+  
